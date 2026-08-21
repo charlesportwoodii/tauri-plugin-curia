@@ -50,7 +50,7 @@ impl Sink for ConsoleSink {
             Level::Trace => log::Level::Trace,
         };
 
-        android_curia::log(
+        android_logger::log(
             &log::Record::builder()
                 .level(level)
                 .target(&event.target)
