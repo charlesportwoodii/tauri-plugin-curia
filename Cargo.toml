@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-curia"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 rust-version = "1.97.1"
 license = "BSD-3-Clause"
@@ -9,7 +9,7 @@ links = "tauri-plugin-curia"
 autotests = false
 
 [dependencies]
-curia = { git = "https://github.com/charlesportwoodii/curia", tag = "0.1.0" }
+curia = { version = "^0.1" }
 tauri = { version = "^2" }
 serde = { version = "^1", features = ["derive"] }
 serde_json = { version = "^1" }

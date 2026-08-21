@@ -1,6 +1,6 @@
 {
   "name": "@charlesportwoodii/tauri-plugin-curia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Structured logging for Tauri, over the logger crate.",
   "license": "BSD-3-Clause",
   "type": "module",
