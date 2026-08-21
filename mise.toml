@@ -1,0 +1,36 @@
+[tools]
+rust = "1.97.1"
+node = "24"
+yarn = "1.22.22"
+
+# No task sets `shell`. A task pinned to pwsh is unrunnable on the Linux and
+# macOS legs of this crate's CI matrix.
+
+[tasks.fmt]
+description = "Format the crate"
+run = "cargo fmt --all"
+
+[tasks.fmt-check]
+description = "Fail when formatting is not applied. The direction CI runs"
+run = "cargo fmt --all -- --check"
+
+[tasks.lint]
+description = "Clippy with warnings denied"
+run = "cargo clippy --all-targets -- -D warnings"
+
+[tasks.test]
+description = "Run the aggregator test target"
+run = "cargo test"
+
+[tasks.js-deps]
+description = "Install the JS package dependencies"
+run = "yarn install --frozen-lockfile"
+
+[tasks.js-build]
+description = "Build dist-js from guest-js"
+depends = ["js-deps"]
+run = "yarn build"
+
+[tasks.check]
+description = "Everything CI runs"
+depends = ["fmt-check", "lint", "test", "js-build"]
