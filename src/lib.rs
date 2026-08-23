@@ -1,17 +1,14 @@
 //! Structured logging for Tauri, over the `logger` crate.
 //!
 //! The plugin registers a command that turns webview calls into `curia::LogEvent`
-//! and ships the sinks that are genuinely Tauri-coupled. It installs no sinks
+//! and ships the one sink that is genuinely Tauri-coupled. It installs no sinks
 //! itself; the consumer calls `curia::Logger::install`.
 
 mod commands;
 mod dtos;
 mod error;
-mod format;
 mod plugin;
-mod rotation;
 mod sink;
-mod strategy;
 
 // Re-exported so a consumer needs one dependency rather than two. Upstream did
 // the same with `pub use log` and `pub use fern`.
@@ -23,17 +20,18 @@ pub use curia;
 // the plugin does not surface.
 pub use curia::{debug, error, info, trace, warn};
 
+// The sinks and the rotation machinery live in curia, which has no Tauri
+// dependency. They are re-exported so a consumer of this plugin still reaches
+// them by one path.
+pub use curia::{
+    ConsoleSink, DEFAULT_FILE_OPEN_STRATEGY, DEFAULT_MAX_FILE_SIZE, DEFAULT_ROTATION_STRATEGY,
+    DEFAULT_TIMEZONE_STRATEGY, FileOpenStrategy, FileSink, LineFormatter, RotatingFile,
+    RotationStrategy, TimezoneStrategy,
+};
+
 pub use dtos::{RecordPayload, WEBVIEW_TARGET, WebviewRecord};
 pub use error::Error;
-pub use format::LineFormatter;
-pub use rotation::RotatingFile;
-pub use sink::{ConsoleSink, FileSink, WebviewSink};
-pub use strategy::{FileOpenStrategy, RotationStrategy, TimezoneStrategy};
-
-pub const DEFAULT_MAX_FILE_SIZE: u64 = 40_000;
-pub const DEFAULT_ROTATION_STRATEGY: RotationStrategy = RotationStrategy::KeepOne;
-pub const DEFAULT_TIMEZONE_STRATEGY: TimezoneStrategy = TimezoneStrategy::UseUtc;
-pub const DEFAULT_FILE_OPEN_STRATEGY: FileOpenStrategy = FileOpenStrategy::Append;
+pub use sink::WebviewSink;
 
 // A free function by framework convention: every Tauri plugin is mounted as
 // `tauri_plugin_<name>::init()` in the consumer's builder chain. It holds no
