@@ -1,6 +1,6 @@
 [package]
 name = "tauri-plugin-curia"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.97.1"
 license = "BSD-3-Clause"
@@ -9,21 +9,12 @@ links = "tauri-plugin-curia"
 autotests = false
 
 [dependencies]
-curia = { version = "^0.1" }
+curia = { version = "^0.2" }
 tauri = { version = "^2" }
 serde = { version = "^1", features = ["derive"] }
 serde_json = { version = "^1" }
 chrono = { version = "^0.4" }
 thiserror = { version = "^2" }
-time = { version = "^0.3", features = ["formatting", "local-offset", "macros"] }
-flume = "0.12.0"
-
-[target."cfg(target_os = \"android\")".dependencies]
-android_logger = { version = "^0.15" }
-log = { version = "^0.4" }
-
-[target."cfg(target_os = \"ios\")".dependencies]
-oslog = { version = "0.2", default-features = false }
 
 [build-dependencies]
 tauri-plugin = { version = "^2", features = ["build"] }
